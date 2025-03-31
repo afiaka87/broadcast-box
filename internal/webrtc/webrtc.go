@@ -127,7 +127,6 @@ func peerConnectionDisconnected(streamKey string, whepSessionId string) {
 	}
 
 	stream.whepSessionsLock.Lock()
-	defer stream.whepSessionsLock.Unlock()
 
 	if whepSessionId != "" {
 		delete(stream.whepSessions, whepSessionId)
@@ -136,19 +135,20 @@ func peerConnectionDisconnected(streamKey string, whepSessionId string) {
 		stream.videoTracks = nil
 	}
 
-	// Only delete stream if all WHEP Sessions are gone and have no WHIP Client
-	if len(stream.whepSessions) != 0 || stream.hasWHIPClient.Load() {
-		return
-	}
+	// Store count before potentially deleting stream map entry
+	whepCount := len(stream.whepSessions)
+	stream.whepSessionsLock.Unlock() // Unlock before potentially deleting streamMap entry
 
-	stream.whipActiveContextCancel()
-	delete(streamMap, streamKey)
+	// Only delete stream if all WHEP Sessions are gone and have no WHIP Client
+	if whepCount == 0 && !stream.hasWHIPClient.Load() {
+		stream.whipActiveContextCancel()
+		delete(streamMap, streamKey)
+	}
 }
 
 func addTrack(stream *stream, rid string) (*videoTrack, error) {
-	streamMapLock.Lock()
-	defer streamMapLock.Unlock()
-
+	// Note: This function expects streamMapLock to be held by the caller if necessary
+	// (though currently it's only called from WHIP setup which already holds the lock)
 	for i := range stream.videoTracks {
 		if rid == stream.videoTracks[i].rid {
 			return stream.videoTracks[i], nil
@@ -428,6 +428,7 @@ type StreamStatus struct {
 	AudioPacketsReceived uint64              `json:"audioPacketsReceived"`
 	VideoStreams         []StreamStatusVideo `json:"videoStreams"`
 	WHEPSessions         []whepSessionStatus `json:"whepSessions"`
+	ViewerCount          int                 `json:"viewerCount"` // <-- ADDED
 }
 
 type whepSessionStatus struct {
@@ -446,11 +447,14 @@ func GetStreamStatuses() []StreamStatus {
 
 	for streamKey, stream := range streamMap {
 		whepSessions := []whepSessionStatus{}
-		stream.whepSessionsLock.Lock()
+
+		stream.whepSessionsLock.RLock()         // Use RLock for reading count and session details
+		viewerCount := len(stream.whepSessions) // Get viewer count
+
 		for id, whepSession := range stream.whepSessions {
 			currentLayer, ok := whepSession.currentLayer.Load().(string)
 			if !ok {
-				continue
+				continue // Should not happen, but safe check
 			}
 
 			whepSessions = append(whepSessions, whepSessionStatus{
@@ -461,7 +465,7 @@ func GetStreamStatuses() []StreamStatus {
 				PacketsWritten: whepSession.packetsWritten,
 			})
 		}
-		stream.whepSessionsLock.Unlock()
+		stream.whepSessionsLock.RUnlock() // Release RLock
 
 		streamStatusVideo := []StreamStatusVideo{}
 		for _, videoTrack := range stream.videoTracks {
@@ -483,6 +487,7 @@ func GetStreamStatuses() []StreamStatus {
 			AudioPacketsReceived: stream.audioPacketsReceived.Load(),
 			VideoStreams:         streamStatusVideo,
 			WHEPSessions:         whepSessions,
+			ViewerCount:          viewerCount, // <-- ADDED
 		})
 	}
 
