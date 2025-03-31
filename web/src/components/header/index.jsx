@@ -7,12 +7,13 @@ const Header = () => {
   const navbarEnabled = !cinemaMode;
 
   return (
+    // Ensure base body styles from index.css provide the main background
     <div className="min-h-screen flex flex-col"> {/* Ensure footer is pushed down */}
       {navbarEnabled && (
-        <nav className='bg-slate-800 shadow-md p-4 fixed w-full z-10 top-0'>
+        <nav className='bg-indigo-900 shadow-md p-4 fixed w-full z-10 top-0'> {/* Synthwave: Changed bg */}
           {/* Slightly different bg, subtle shadow, more padding */}
           <div className='container mx-auto flex flex-wrap items-center'>
-            <div className='flex flex-1 text-white'>
+            <div className='flex flex-1 text-cyan-100'> {/* Synthwave: Changed text (could inherit) */}
               <Link to="/" className='font-semibold text-xl tracking-tight'> {/* Adjusted font */}
                 Broadcast Box
               </Link>
@@ -28,20 +29,20 @@ const Header = () => {
       </main>
 
       {/* Refined Footer */}
-      <footer className="bg-slate-800 text-gray-400 text-sm mt-12">
+      <footer className="bg-indigo-900 text-cyan-400 text-sm mt-12"> {/* Synthwave: Changed bg and text */}
         <div className="container mx-auto px-4 py-4 text-center">
           <ul className="flex items-center justify-center space-x-6">
             <li>
-              <a href="https://github.com/Glimesh/broadcast-box" className="hover:text-white transition-colors">GitHub</a>
+              <a href="https://github.com/Glimesh/broadcast-box" className="hover:text-fuchsia-300 transition-colors">GitHub</a> {/* Synthwave: Accent hover */}
             </li>
             <li>
-              <a href="https://pion.ly" className="hover:text-white transition-colors">Pion</a>
+              <a href="https://pion.ly" className="hover:text-fuchsia-300 transition-colors">Pion</a> {/* Synthwave: Accent hover */}
             </li>
             <li>
-              <a href="https://glimesh.tv" className="hover:text-white transition-colors">Glimesh</a>
+              <a href="https://glimesh.tv" className="hover:text-fuchsia-300 transition-colors">Glimesh</a> {/* Synthwave: Accent hover */}
             </li>
           </ul>
-          <p className="mt-3">© {new Date().getFullYear()} Broadcast Box Contributors</p>
+          <p className="mt-3">© {new Date().getFullYear()} Broadcast Box Contributors</p> {/* Inherits text-cyan-400 */}
         </div>
       </footer>
     </div>

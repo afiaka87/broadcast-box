@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react' // Added useState, useEffect, useRef, useMemo
 import { useLocation } from 'react-router-dom'
-import ErrorHeader from '../error-header'
+import ErrorHeader from '../error-header' // Uses new error style
 
 // Success Message Component
 function PublishSuccess({ subscribeUrl }) {
   return (
-    <div className={'bg-emerald-600 text-white text-base font-medium ' + // Adjusted color/size
+    <div className={'bg-lime-500 text-lime-950 text-base font-medium ' + // Synthwave: Adjusted color/size
       'text-center p-4 rounded-lg whitespace-pre-wrap mb-4 shadow'
     }>
-      Live! Streaming to: <a href={subscribeUrl} target="_blank" rel="noreferrer" className="font-semibold underline hover:text-emerald-100">{subscribeUrl}</a>
+      Live! Streaming to: <a href={subscribeUrl} target="_blank" rel="noreferrer" className="font-semibold underline hover:text-lime-800">{subscribeUrl}</a> {/* Synthwave: Link hover */}
     </div>
   )
 }
@@ -169,7 +169,7 @@ function Publish() { // Renamed from Player to Publish for clarity
       {publishSuccess && <PublishSuccess subscribeUrl={subscribeUrl} />}
 
       {/* Video preview area */}
-      <div className="relative aspect-video bg-slate-800 rounded-lg overflow-hidden shadow-lg mb-6">
+      <div className="relative aspect-video bg-indigo-900 rounded-lg overflow-hidden shadow-lg mb-6"> {/* Synthwave: Changed bg */}
         <video
           ref={videoRef}
           autoPlay
@@ -178,7 +178,7 @@ function Publish() { // Renamed from Player to Publish for clarity
           className='block w-full h-full object-contain bg-black' // Contained video preview
         />
         {isConnecting && ( // Show loading indicator
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-cyan-100"> {/* Synthwave: Text color */}
                 <svg className="animate-spin h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -187,7 +187,7 @@ function Publish() { // Renamed from Player to Publish for clarity
             </div>
         )}
         {!videoRef.current?.srcObject && !isConnecting && !errorMessage && ( // Placeholder text
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-gray-400">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-cyan-400"> {/* Synthwave: Text color */}
                 <span>{useDisplayMedia ? 'Select screen/window to share' : 'Waiting for camera access...'}</span>
             </div>
         )}
@@ -197,7 +197,7 @@ function Publish() { // Renamed from Player to Publish for clarity
       {/* Toggle Button - Styled using base styles */}
       <button
         onClick={toggleMediaSource}
-        className="btn-secondary w-full py-2.5" // Use secondary style
+        className="btn-secondary w-full py-2.5" // Use secondary style (Cyan)
         disabled={isConnecting} // Disable while connecting
       >
         {useDisplayMedia ? 'Switch to Webcam' : 'Switch to Screen Share'}

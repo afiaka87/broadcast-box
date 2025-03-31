@@ -1,48 +1,48 @@
-/* Using @import is generally discouraged with modern bundlers like Vite, 
-   but keeping it as it was in the original setup. 
+/* Using @import is generally discouraged with modern bundlers like Vite,
+   but keeping it as it was in the original setup.
    Vite handles this correctly. */
-@import 'tailwindcss';
+   @import 'tailwindcss';
 
-@layer base {
-	body {
-		@apply bg-slate-900 text-gray-200; /* Ensure base styles are applied */
-		margin: 0;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-			'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-
-	code {
-		font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-	}
-
-  /* Add focus-visible styling for accessibility */
-  *:focus-visible {
-       @apply outline-none ring-2 ring-offset-2 ring-blue-500 ring-offset-slate-900;
-  }
-
-  /* Base input/select/button styling for consistency */
-  input, select, textarea {
-      @apply bg-slate-700 border border-slate-600 rounded-md py-2 px-3 leading-tight text-gray-100 placeholder-gray-400;
-      @apply focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none; /* Adjusted focus */
-  }
-
-  button {
-      @apply rounded-md font-semibold transition-colors duration-150 ease-in-out;
-      @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900; /* Consistent focus */
-  }
-
-  /* Primary Button Style */
-  .btn-primary {
-      @apply bg-blue-600 text-white py-2 px-4 hover:bg-blue-700 disabled:opacity-50;
-  }
-
-  /* Secondary/Alternative Button Style */
-  .btn-secondary {
-       @apply bg-slate-600 text-white py-2 px-4 hover:bg-slate-700 disabled:opacity-50;
-  }
-
-}
-
-/* Removed v3 compatibility styles as they might conflict with v4 defaults */
+   @layer base {
+       body {
+           @apply bg-indigo-950 text-cyan-100; /* Synthwave: Deep indigo bg, light cyan text */
+           margin: 0;
+           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+               'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+           -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+       }
+   
+       code {
+           font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+       }
+   
+     /* Add focus-visible styling for accessibility */
+     *:focus-visible {
+          @apply outline-none ring-2 ring-offset-2 ring-fuchsia-500 ring-offset-indigo-950; /* Synthwave: Fuchsia ring, indigo offset */
+     }
+   
+     /* Base input/select/textarea styling for consistency */
+     input, select, textarea {
+         @apply bg-indigo-800 border border-indigo-700 rounded-md py-2 px-3 leading-tight text-cyan-100 placeholder-cyan-500; /* Synthwave: Indigo bg/border, cyan text */
+         @apply focus:border-fuchsia-500 focus:ring-1 focus:ring-fuchsia-500 focus:outline-none; /* Synthwave: Fuchsia focus */
+     }
+   
+     button {
+         @apply rounded-md font-semibold transition-colors duration-150 ease-in-out;
+         @apply focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 focus:ring-offset-indigo-950; /* Synthwave: Fuchsia focus, indigo offset */
+     }
+   
+     /* Primary Button Style */
+     .btn-primary {
+         @apply bg-fuchsia-600 text-white py-2 px-4 hover:bg-fuchsia-700 disabled:opacity-50; /* Synthwave: Fuchsia primary */
+     }
+   
+     /* Secondary/Alternative Button Style */
+     .btn-secondary {
+          @apply bg-cyan-600 text-white py-2 px-4 hover:bg-cyan-700 disabled:opacity-50; /* Synthwave: Cyan secondary */
+     }
+   
+   }
+   
+   /* Removed v3 compatibility styles as they might conflict with v4 defaults */
